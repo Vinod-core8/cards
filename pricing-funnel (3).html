@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick your funnel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root{
+    --ink:#12141c;
+    --ink-2:#1b1e29;
+    --paper:#f4f2ec;
+    --accent:#5b5fef;
+    --accent-2:#e8a33d;
+    --slate:#8b93a6;
+    --line:rgba(244,242,236,0.12);
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:72px 24px 100px;
+  }
+
+  .eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    font-size:12px;
+    color:var(--accent-2);
+    margin-bottom:18px;
+  }
+
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(34px,5vw,54px);
+    line-height:1.08;
+    margin:0 0 18px;
+    max-width:760px;
+    letter-spacing:-0.01em;
+  }
+
+  .sub{
+    font-size:17px;
+    color:var(--slate);
+    max-width:520px;
+    line-height:1.55;
+    margin:0 0 56px;
+  }
+
+  /* Funnel signature: cards physically narrow left to right */
+  .funnel-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:28px;
+    align-items:stretch;
+    padding-top:14px;
+  }
+
+  .card{
+    position:relative;
+    background:
+      radial-gradient(120% 90% at 18% -10%, rgba(255,255,255,0.10), rgba(255,255,255,0) 55%),
+      linear-gradient(165deg, #23273a 0%, #1b1e29 45%, #15171f 100%);
+    border:1px solid rgba(255,255,255,0.09);
+    border-radius:20px;
+    padding:34px 28px;
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    box-shadow:
+      0 30px 60px -28px rgba(0,0,0,0.65),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    overflow:hidden;
+  }
+
+  /* glass sheen sweeping across the top of every card */
+  .card::before{
+    content:"";
+    position:absolute;
+    top:-60%;
+    left:-20%;
+    width:140%;
+    height:120%;
+    background:linear-gradient(115deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 30%);
+    pointer-events:none;
+    transform:rotate(-8deg);
+  }
+
+  .card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(91,95,239,0.45);
+    box-shadow:
+      0 34px 70px -26px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(91,95,239,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  .card > *{position:relative; z-index:1;}
+
+  /* Growth is the "most chosen" tier — lifted slightly above the rest */
+  .card[data-stage="2"]{
+    border-color:rgba(91,95,239,0.4);
+    box-shadow:
+      0 36px 74px -26px rgba(30,26,90,0.55),
+      0 0 0 1px rgba(91,95,239,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.12);
+  }
+  .card[data-stage="2"]:hover{transform:translateY(-10px);}
+
+  .card[data-stage="3"]{
+    border-color:rgba(232,163,61,0.4);
+    background:
+      radial-gradient(120% 90% at 18% -10%, rgba(255,214,138,0.14), rgba(255,255,255,0) 55%),
+      linear-gradient(165deg, #2a2416 0%, #201c15 45%, #17140e 100%);
+    box-shadow:
+      0 30px 60px -28px rgba(0,0,0,0.65),
+      0 0 0 1px rgba(232,163,61,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .card[data-stage="3"]:hover{
+    border-color:rgba(232,163,61,0.55);
+    box-shadow:
+      0 34px 70px -26px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(232,163,61,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  .stage-mark{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin:4px 0 14px;
+  }
+  .card[data-stage="3"] .stage-mark{color:var(--accent-2);}
+
+  .pkg-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:24px;
+    font-weight:600;
+    margin:0 0 6px;
+  }
+
+  .best-for{
+    font-size:12.5px;
+    color:var(--paper);
+    background:rgba(91,95,239,0.14);
+    border:1px solid rgba(91,95,239,0.3);
+    border-radius:6px;
+    padding:8px 10px;
+    margin:0 0 14px;
+    line-height:1.4;
+  }
+  .pkg-tag{
+    font-size:14px;
+    color:var(--slate);
+    margin:0 0 22px;
+    line-height:1.45;
+  }
+
+  .badge{
+    position:absolute;
+    top:-12px;
+    right:26px;
+    background:linear-gradient(135deg, #6c70f4, var(--accent));
+    color:#fff;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:999px;
+    box-shadow:0 8px 18px -6px rgba(91,95,239,0.7), inset 0 1px 0 rgba(255,255,255,0.35);
+    z-index:2;
+  }
+  .badge-premium{
+    background:linear-gradient(135deg, #f3c26b, var(--accent-2));
+    color:#241a04;
+    box-shadow:0 8px 18px -6px rgba(232,163,61,0.7), inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+
+  .pkg-price{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:34px;
+    font-weight:700;
+    margin:0 0 4px;
+  }
+  .pkg-price span{
+    font-size:14px;
+    font-weight:500;
+    color:var(--slate);
+    font-family:'Inter',sans-serif;
+  }
+
+  .divider{height:1px;background:var(--line);margin:20px 0;}
+
+  .features{
+    list-style:none;
+    padding:0;
+    margin:0 0 28px;
+    flex-grow:1;
+  }
+  .features li{
+    font-size:14px;
+    color:#d7d5cf;
+    padding-left:26px;
+    position:relative;
+    margin-bottom:12px;
+    line-height:1.4;
+  }
+  .features li::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    top:0.5px;
+    width:16px;
+    height:16px;
+    font-size:10px;
+    line-height:16px;
+    text-align:center;
+    color:#fff;
+    background:linear-gradient(135deg, #6c70f4, var(--accent));
+    border-radius:50%;
+    box-shadow:0 2px 6px -1px rgba(91,95,239,0.6);
+  }
+  .card[data-stage="3"] .features li::before{
+    background:linear-gradient(135deg, #f3c26b, var(--accent-2));
+    box-shadow:0 2px 6px -1px rgba(232,163,61,0.6);
+  }
+
+  .cta-btn{
+    background:linear-gradient(135deg, #6c70f4, var(--accent));
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:14px 18px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    cursor:pointer;
+    box-shadow:0 14px 26px -12px rgba(91,95,239,0.75), inset 0 1px 0 rgba(255,255,255,0.25);
+    transition:filter .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .cta-btn:hover{filter:brightness(1.08); transform:translateY(-2px); box-shadow:0 18px 30px -12px rgba(91,95,239,0.85), inset 0 1px 0 rgba(255,255,255,0.3);}
+  .card[data-stage="3"] .cta-btn{
+    background:linear-gradient(135deg, #f3c26b, var(--accent-2));
+    color:#241a04;
+    box-shadow:0 14px 26px -12px rgba(232,163,61,0.75), inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+  .card[data-stage="3"] .cta-btn:hover{box-shadow:0 18px 30px -12px rgba(232,163,61,0.85), inset 0 1px 0 rgba(255,255,255,0.4);}
+
+  /* Modal */
+  .overlay{
+    position:fixed; inset:0;
+    background:rgba(10,11,16,0.72);
+    backdrop-filter:blur(3px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:50;
+  }
+  .overlay.open{display:flex;}
+
+  .modal{
+    background:var(--paper);
+    color:#191a1f;
+    width:100%;
+    max-width:420px;
+    border-radius:16px;
+    padding:32px 30px;
+    position:relative;
+    animation:pop .22s ease;
+  }
+  @keyframes pop{from{opacity:0; transform:scale(.96);} to{opacity:1; transform:scale(1);}}
+
+  .modal-close{
+    position:absolute; top:16px; right:18px;
+    background:none; border:none; font-size:20px;
+    cursor:pointer; color:#6b6f7d; line-height:1;
+  }
+
+  .modal-eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 6px;
+  }
+  .modal h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:24px;
+    margin:0 0 22px;
+  }
+
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;
+    font-size:12.5px;
+    font-weight:600;
+    color:#4a4d58;
+    margin-bottom:6px;
+  }
+  .field input{
+    width:100%;
+    padding:11px 12px;
+    border-radius:8px;
+    border:1px solid #d8d5cb;
+    background:#fff;
+    font-size:14px;
+    font-family:'Inter',sans-serif;
+  }
+  .field input:focus{outline:2px solid var(--accent); outline-offset:1px;}
+
+  .submit-btn{
+    width:100%;
+    background:#191a1f;
+    color:#fff;
+    border:none;
+    border-radius:9px;
+    padding:13px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .submit-btn:hover{background:#000;}
+  .submit-btn:disabled{opacity:0.6; cursor:default;}
+
+  .form-note{font-size:12px; color:#8b8e99; margin-top:12px; line-height:1.4;}
+
+  /* Result state */
+  .result{display:none; text-align:center;}
+  .result.show{display:block;}
+  .result .price-big{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:42px;
+    margin:6px 0 4px;
+    color:#191a1f;
+  }
+  .result .price-label{
+    font-size:13px;
+    color:#6b6f7d;
+    margin-bottom:18px;
+  }
+  .result p.confirm{
+    font-size:14px;
+    color:#4a4d58;
+    line-height:1.5;
+    margin-bottom:22px;
+  }
+  .result-close{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    border-radius:9px;
+    padding:12px 22px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+  }
+
+  .send-error{
+    display:none;
+    font-size:12.5px;
+    color:#b3441e;
+    margin-top:10px;
+  }
+
+  @media (max-width:760px){
+    .funnel-row{grid-template-columns:1fr;}
+    .card[data-stage="2"]:hover{transform:translateY(-6px);}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="eyebrow">Pricing</div>
+  <h1>Three ways to fill the funnel.</h1>
+  <p class="sub">Start where your business is today. Every package plugs into the next one, so you only pay for the stage you're actually ready to run.</p>
+
+  <div class="funnel-row">
+
+    <div class="card" data-stage="1">
+      <div class="stage-mark">Stage 01 · Foundation</div>
+      <h3 class="pkg-name">Basic</h3>
+      <p class="best-for">Best for: businesses testing performance marketing on a single channel</p>
+      <p class="pkg-tag">Meta Ads only — a low-commitment entry point to start seeing what performance marketing can do for your business.</p>
+      <div class="divider"></div>
+      <ul class="features">
+        <li>1 active Meta campaign (Awareness, Traffic, or Lead Gen)</li>
+        <li>Ad spend managed up to ₹40,000/month</li>
+        <li>4 static/carousel creatives per month</li>
+        <li>Basic audience targeting & interest testing</li>
+        <li>Meta Pixel setup (one-time)</li>
+        <li>Monthly performance report</li>
+      </ul>
+      <button class="cta-btn" data-package="Basic" data-price="₹6,999+ GST/month">Get Basic</button>
+    </div>
+
+    <div class="card" data-stage="2">
+      <div class="badge">Most Chosen</div>
+      <div class="stage-mark">Stage 02 · Performance</div>
+      <h3 class="pkg-name">Growth</h3>
+      <p class="best-for">Best for: brands ready to run Meta + Google together</p>
+      <p class="pkg-tag">Cross-platform campaigns, real tracking, and a dedicated account manager — built for brands scaling past a single channel.</p>
+      <div class="divider"></div>
+      <ul class="features">
+        <li>Meta + Google Ads, combined budget strategy</li>
+        <li>Up to 3 active campaigns across both platforms</li>
+        <li>Ad spend managed up to ₹1,25,000/month</li>
+        <li>6 creatives/month (static + reels/short-form video)</li>
+        <li>GA4 + Meta Pixel + GTM conversion tracking</li>
+        <li>1-stage retargeting funnel</li>
+        <li>Bi-weekly reporting + dedicated account manager</li>
+      </ul>
+      <button class="cta-btn" data-package="Growth" data-price="₹19,999+ GST/month">Go with Growth</button>
+    </div>
+
+    <div class="card" data-stage="3">
+      <div class="badge badge-premium">Premium</div>
+      <div class="stage-mark">Stage 03 · Full funnel</div>
+      <h3 class="pkg-name">Full Funnel</h3>
+      <p class="best-for">Best for: brands ready to scale across every channel</p>
+      <p class="pkg-tag">Every channel and touchpoint, optimised toward ROAS weekly — with e-commerce automation included.</p>
+      <div class="divider"></div>
+      <ul class="features">
+        <li>Meta + Google + retargeting, fully integrated</li>
+        <li>Unlimited active campaigns</li>
+        <li>Ad spend managed above ₹1,25,000/month, no cap</li>
+        <li>Weekly creative production — UGC + performance (10–12 pieces/month)</li>
+        <li>Landing page build & ongoing CRO</li>
+        <li>CRM / WhatsApp API lead integration + nurture flows</li>
+        <li>Multi-stage retargeting funnel</li>
+        <li>Weekly reporting + live strategy calls</li>
+        <li>Quarterly growth roadmap & priority support</li>
+      </ul>
+      <button class="cta-btn" data-package="Full Funnel" data-price="₹55,500+ GST/month">Go Premium</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+
+    <div id="formView">
+      <div class="modal-eyebrow" id="modalEyebrow">Package</div>
+      <h2 id="modalTitle">Get started</h2>
+
+      <form id="leadForm">
+        <div class="field">
+          <label for="name">Full name</label>
+          <input type="text" id="name" required placeholder="Your name">
+        </div>
+        <div class="field">
+          <label for="number">Phone number</label>
+          <input type="tel" id="number" required placeholder="e.g. 98765 43210">
+        </div>
+        <div class="field">
+          <label for="business">Business name / type</label>
+          <input type="text" id="business" required placeholder="e.g. Bloom Bakery / Retail">
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+        <div class="send-error" id="sendError">Something went wrong sending your details. Please try again.</div>
+        <p class="form-note">We'll use these details only to reach out about your chosen package.</p>
+      </form>
+    </div>
+
+    <div class="result" id="resultView">
+      <div class="modal-eyebrow">You selected</div>
+      <h2 id="resultPackage">Package</h2>
+      <div class="price-big" id="resultPrice">₹0</div>
+      <div class="price-label">Total for this package</div>
+      <p class="confirm" id="resultConfirm">Thanks! We've noted your details and will reach out shortly to get you started.</p>
+      <button class="result-close" id="resultClose">Done</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ---------------------------------------------------------------
+  // EmailJS setup — replace these three values with your own from
+  // https://dashboard.emailjs.com (Account > API Keys, Email Services,
+  // Email Templates). Keep them as plain strings.
+  // ---------------------------------------------------------------
+  const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+  const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+  const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+
+  if (window.emailjs && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
+
+  const overlay = document.getElementById('overlay');
+  const modalClose = document.getElementById('modalClose');
+  const formView = document.getElementById('formView');
+  const resultView = document.getElementById('resultView');
+  const leadForm = document.getElementById('leadForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const sendError = document.getElementById('sendError');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalEyebrow = document.getElementById('modalEyebrow');
+  const resultClose = document.getElementById('resultClose');
+
+  let currentPackage = "";
+  let currentPrice = "";
+
+  document.querySelectorAll('.cta-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentPackage = btn.dataset.package;
+      currentPrice = btn.dataset.price;
+      modalEyebrow.textContent = currentPackage + " package";
+      modalTitle.textContent = "Tell us where to reach you";
+      formView.style.display = 'block';
+      resultView.classList.remove('show');
+      leadForm.reset();
+      sendError.style.display = 'none';
+      overlay.classList.add('open');
+    });
+  });
+
+  function closeModal(){
+    overlay.classList.remove('open');
+  }
+  modalClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  resultClose.addEventListener('click', closeModal);
+
+  leadForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const number = document.getElementById('number').value.trim();
+    const business = document.getElementById('business').value.trim();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+    sendError.style.display = 'none';
+
+    const templateParams = {
+      name: name,
+      number: number,
+      business: business,
+      package: currentPackage,
+      price: currentPrice
+    };
+
+    const finish = () => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit";
+      document.getElementById('resultPackage').textContent = currentPackage;
+      document.getElementById('resultPrice').textContent = currentPrice;
+      document.getElementById('resultConfirm').textContent =
+        "Thanks, " + name + "! We've noted your details for " + business + " and will reach out on " + number + " shortly.";
+      formView.style.display = 'none';
+      resultView.classList.add('show');
+    };
+
+    if (window.emailjs && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(() => finish())
+        .catch((err) => {
+          console.error("EmailJS error:", err);
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Submit";
+          sendError.style.display = 'block';
+        });
+    } else {
+      // EmailJS not configured yet — still show the price/result so the
+      // flow can be tested before real keys are added.
+      finish();
+    }
+  });
+</script>
+
+</body>
+</html>
