@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Ledger — Meta Ads Plan, 15 Listings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-deep:#FAF7EF;
+    --surface:#FFFFFF;
+    --surface-raised:#FCFAF4;
+    --line:#EAE1CB;
+    --line-soft:#F3ECDC;
+    --ink-1:#221D12;
+    --ink-2:#6B6250;
+    --ink-3:#A39A82;
+    --brass:#B8862F;
+    --brass-dim:#F7EBCE;
+    --sage:#D7A94E;
+    --sage-dim:#F9EFD9;
+    --clay:#93662A;
+    --clay-dim:#F0E2C9;
+    --alert:#B5453A;
+    --alert-dim:#F5E0DC;
+    --font-display:'Fraunces', serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink-1);
+    font-family:var(--font-body);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass-dim); color:var(--ink-1);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  @media (max-width:640px){ .wrap{padding:0 16px;} }
+
+  /* ---------- Header ---------- */
+  header.top{
+    border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg, var(--bg-deep), var(--bg));
+    padding:22px 0;
+    position:sticky; top:0; z-index:50;
+  }
+  .top-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  .stamp{display:flex; align-items:center; gap:12px;}
+  .stamp-mark{
+    width:38px; height:38px; border:1.5px solid var(--brass); border-radius:3px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:600; font-size:15px; color:var(--brass);
+    transform:rotate(-2deg);
+  }
+  .stamp-text .title{font-family:var(--font-display); font-weight:600; font-size:19px; letter-spacing:-0.01em;}
+  .stamp-text .sub{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-3); letter-spacing:.08em; margin-top:2px;}
+  .top-meta{font-family:var(--font-mono); font-size:11px; color:var(--ink-3); text-align:right; letter-spacing:.04em;}
+  .top-meta b{color:var(--ink-2);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:52px 0 40px; border-bottom:1px solid var(--line);}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--brass); margin-bottom:14px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:22px; height:1px; background:var(--brass);}
+  .hero h1{
+    font-family:var(--font-display); font-weight:600; font-size:38px; line-height:1.12;
+    letter-spacing:-0.01em; max-width:780px; margin-bottom:16px;
+  }
+  .hero h1 em{color:var(--brass); font-style:normal;}
+  @media (max-width:640px){ .hero h1{font-size:27px;} }
+  .hero p.lede{color:var(--ink-2); font-size:15px; max-width:640px; margin-bottom:30px;}
+  .hero p.lede b{color:var(--ink-1);}
+
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  @media (max-width:920px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
+  .stat-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:6px;
+    padding:16px 18px; border-top:2px solid var(--brass);
+  }
+  .stat-card .lbl{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; color:var(--ink-3); text-transform:uppercase; margin-bottom:8px;}
+  .stat-card .val{font-family:var(--font-display); font-size:22px; font-weight:600; color:var(--ink-1);}
+  .stat-card .val small{font-family:var(--font-mono); font-size:12px; color:var(--ink-2); font-weight:400;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:48px 0; border-bottom:1px solid var(--line);}
+  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:26px; flex-wrap:wrap;}
+  .sec-head h2{font-family:var(--font-display); font-weight:600; font-size:24px; letter-spacing:-0.01em;}
+  .sec-head p{color:var(--ink-2); font-size:13.5px; max-width:560px; margin-top:6px;}
+  .sec-tag{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-3); letter-spacing:.08em; white-space:nowrap;}
+
+  /* ---------- Category overview cards ---------- */
+  .cat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:920px){ .cat-grid{grid-template-columns:1fr;} }
+  .cat-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:22px;
+    position:relative; overflow:hidden;
+  }
+  .cat-card::before{content:''; position:absolute; left:0; top:0; bottom:0; width:4px;}
+  .cat-card.flats::before{background:var(--sage);}
+  .cat-card.villas::before{background:var(--brass);}
+  .cat-card.plots::before{background:var(--clay);}
+  .cat-card .cat-name{font-family:var(--font-display); font-size:19px; font-weight:600; margin-bottom:2px;}
+  .cat-card .cat-count{font-family:var(--font-mono); font-size:11px; color:var(--ink-3); letter-spacing:.05em; margin-bottom:16px;}
+  .cat-metrics{display:flex; flex-direction:column; gap:9px;}
+  .cat-metric{display:flex; justify-content:space-between; font-size:12.5px; color:var(--ink-2); border-top:1px dashed var(--line-soft); padding-top:9px;}
+  .cat-metric:first-child{border-top:none; padding-top:0;}
+  .cat-metric b{font-family:var(--font-mono); color:var(--ink-1); font-weight:600;}
+
+  /* ---------- Neighborhood index ---------- */
+  .hood-index{display:flex; flex-wrap:wrap; gap:10px;}
+  .hood-chip{
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface); border:1px solid var(--line); border-radius:20px;
+    padding:8px 14px 8px 10px; font-size:12.5px; color:var(--ink-2);
+  }
+  .hood-chip .dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+  .hood-chip b{color:var(--ink-1); font-family:var(--font-mono); font-weight:600; margin-left:2px;}
+
+  /* ---------- Ledger tables ---------- */
+  .ledger-block{margin-bottom:36px;}
+  .ledger-block:last-child{margin-bottom:0;}
+  .ledger-title{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+  .ledger-dot{width:10px; height:10px; border-radius:2px; transform:rotate(45deg);}
+  .ledger-title h3{font-family:var(--font-display); font-size:17px; font-weight:600;}
+  .ledger-title span{font-family:var(--font-mono); font-size:11px; color:var(--ink-3);}
+
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  thead th{
+    text-align:left; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink-3); padding:9px 12px; border-bottom:1px solid var(--line);
+  }
+  tbody td{padding:12px; border-bottom:1px solid var(--line-soft); vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:var(--surface);}
+  td.proj{font-weight:600; color:var(--ink-1);}
+  td.hood{color:var(--ink-3); font-size:12px;}
+  td.mono{font-family:var(--font-mono); color:var(--ink-2); text-align:right;}
+  .totals-row td{border-top:1px solid var(--line); font-weight:600; color:var(--ink-1); background:var(--bg-deep);}
+  .totals-row td.mono{color:var(--brass);}
+
+  footer.foot{padding:24px 0 50px; font-family:var(--font-mono); font-size:11px; color:var(--ink-3); text-align:center;}
+
+  /* ---------- Ads Manager mockup ---------- */
+  .browser-frame{
+    background:#0B1116; border-radius:12px; padding:0; overflow:hidden;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04);
+    margin-bottom:22px;
+  }
+  .browser-frame:last-child{margin-bottom:0;}
+  .browser-bar{
+    display:flex; align-items:center; gap:14px; padding:11px 16px;
+    background:#12181F; border-bottom:1px solid #1E2731;
+  }
+  .browser-dots{display:flex; gap:7px;}
+  .browser-dots span{width:10px; height:10px; border-radius:50%; display:block;}
+  .browser-dots span:nth-child(1){background:#EF6A5F;}
+  .browser-dots span:nth-child(2){background:#F4BF4F;}
+  .browser-dots span:nth-child(3){background:#61C454;}
+  .browser-url{
+    flex:1; background:#1B232B; border-radius:6px; padding:6px 12px;
+    font-family:var(--font-mono); font-size:11.5px; color:#7C8A96; letter-spacing:.02em;
+  }
+  .browser-body{background:#F0F2F5; padding:0;}
+
+  /* light "Ads Manager" table, styled after the real Meta UI */
+  .am-toolbar{
+    display:flex; align-items:center; gap:8px; padding:12px 16px; background:#FFFFFF;
+    border-bottom:1px solid #E4E6EA; flex-wrap:wrap;
+  }
+  .am-tab{
+    font-family:var(--font-body); font-size:12.5px; color:#65676B; padding:7px 12px;
+    border-radius:6px; font-weight:500;
+  }
+  .am-tab.active{background:#E7F0FF; color:#1877F2;}
+  .am-create{
+    margin-left:auto; background:#1877F2; color:#fff; font-size:12.5px; font-weight:600;
+    padding:7px 14px; border-radius:6px;
+  }
+  .am-table-wrap{background:#fff; overflow-x:auto;}
+  table.am-table{width:100%; border-collapse:collapse; font-family:var(--font-body); font-size:12.5px; min-width:760px;}
+  table.am-table thead th{
+    text-align:left; font-size:11px; font-weight:600; color:#65676B;
+    padding:10px 14px; border-bottom:1px solid #E4E6EA; white-space:nowrap; background:#FAFBFC;
+  }
+  table.am-table td{padding:12px 14px; border-bottom:1px solid #EEF0F2; color:#1C1E21; white-space:nowrap;}
+  table.am-table tbody tr:hover{background:#F5F8FF;}
+  .am-toggle{width:30px; height:17px; border-radius:10px; background:#1877F2; position:relative; display:inline-block;}
+  .am-toggle::after{content:''; width:13px; height:13px; border-radius:50%; background:#fff; position:absolute; top:2px; right:2px;}
+  .am-campaign{color:#1877F2; font-weight:500;}
+  .am-campaign small{display:block; color:#65676B; font-weight:400; font-size:11px; margin-top:2px;}
+  .am-delivery{display:flex; align-items:center; gap:6px; color:#1C1E21;}
+  .am-delivery .d{width:7px; height:7px; border-radius:50%; background:#31A24C;}
+  .am-foot-row td{background:#FAFBFC; font-weight:600; border-top:1px solid #E4E6EA;}
+  .am-caption{
+    font-family:var(--font-mono); font-size:11px; color:var(--ink-3); letter-spacing:.04em;
+    padding:6px 2px 0;
+  }
+
+  /* ---------- Per-project Ads Manager dashboards ---------- */
+  .am-group{margin-bottom:38px;}
+  .am-group:last-of-type{margin-bottom:24px;}
+  .am-project-block{margin-bottom:20px;}
+  .am-project-block:last-child{margin-bottom:0;}
+  .am-project-head{display:flex; align-items:baseline; gap:10px; margin-bottom:8px; flex-wrap:wrap;}
+  .am-project-head .idx{font-family:var(--font-mono); font-size:11px; color:var(--ink-3);}
+  .am-project-head h4{font-family:var(--font-display); font-size:15.5px; font-weight:600; color:var(--ink-1);}
+  .am-project-head .sub{font-family:var(--font-mono); font-size:11px; color:var(--ink-3); letter-spacing:.02em;}
+  .am-project-head .sub b{color:var(--brass);}
+  .browser-frame.compact{margin-bottom:0;}
+
+  /* ---------- Google Ads plan (added section) ---------- */
+  .gads .cat-card.website::before{background:#1A73E8;}
+  .gads .cat-card.calls::before{background:var(--sage);}
+  .gads .cat-card.forms::before{background:var(--clay);}
+  .gads .am-tab.active{background:#E8F0FE; color:#1A73E8;}
+  .gads .am-create{background:#1A73E8;}
+  .gads .am-campaign{color:#1A73E8;}
+  .gads .ledger-dot.g-website{background:#1A73E8;}
+  .gads .am-toggle{background:#1A73E8;}
+  .gads .note-card{
+    background:#E8F0FE; border:1px solid #C7DBFB; border-radius:8px; padding:18px 20px;
+    font-size:13px; color:var(--ink-2); margin-top:18px;
+  }
+  .gads .note-card b{color:var(--ink-1);}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-row">
+    <div class="stamp">
+      <div class="stamp-mark">MA</div>
+      <div class="stamp-text">
+        <div class="title">Portfolio Ledger</div>
+        <div class="sub">META ADS · 15 LISTINGS + GOOGLE ADS · BENGALURU</div>
+      </div>
+    </div>
+    <div class="top-meta">Plan cycle: <b>Monthly</b> · Prepared <b>20 Jul 2026</b></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero" style="border-bottom:1px solid var(--line);">
+    <div class="eyebrow">Lead-gen accounts overview</div>
+    <h1>One budget book for <em>15 listings</em>, three property types, eight neighborhoods.</h1>
+    <p class="lede">Budget is set <b>per property type</b>, not flat across the board. Flats run lean at <b>₹15,000/month</b> each, each tuned to its own cost-per-lead somewhere in the <b>₹55–70</b> band — no two flats land on the same number. The villa carries a heavier <b>₹40,000/month</b> at a <b>₹200</b> target CPL, and the plot runs <b>₹35,000/month</b> at <b>₹80</b>. Lead volume is simply budget ÷ CPL.</p>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="lbl">Total Monthly Budget</div>
+        <div class="val">₹2,70,000</div>
+      </div>
+      <div class="stat-card">
+        <div class="lbl">Blended CPL</div>
+        <div class="val">₹72 <small>avg, varies by listing</small></div>
+      </div>
+      <div class="stat-card">
+        <div class="lbl">Est. Leads / Month</div>
+        <div class="val">3,769 <small>total</small></div>
+      </div>
+      <div class="stat-card">
+        <div class="lbl">Active Listings</div>
+        <div class="val">15 <small>across 3 types</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="categories">
+    <div class="sec-head">
+      <div>
+        <h2>Category breakdown</h2>
+        <p>Flats carry the account on volume; the villa and the plot each run as a single-listing test at their own target CPL.</p>
+      </div>
+      <div class="sec-tag">01 / PORTFOLIO</div>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card flats">
+        <div class="cat-name">Flats</div>
+        <div class="cat-count">13 listings</div>
+        <div class="cat-metrics">
+          <div class="cat-metric">Monthly budget <b>₹1,95,000</b></div>
+          <div class="cat-metric">CPL band <b>₹55 – ₹70, no repeats</b></div>
+          <div class="cat-metric">Est. leads/mo <b>3,131</b></div>
+          <div class="cat-metric">Avg CPL <b>₹63 · ₹15,000/listing</b></div>
+        </div>
+      </div>
+      <div class="cat-card villas">
+        <div class="cat-name">Villas</div>
+        <div class="cat-count">1 listing — Vista Villa</div>
+        <div class="cat-metrics">
+          <div class="cat-metric">Monthly budget <b>₹40,000</b></div>
+          <div class="cat-metric">Target CPL <b>₹200</b></div>
+          <div class="cat-metric">Est. leads/mo <b>200</b></div>
+          <div class="cat-metric">Note <b>Higher-ticket, lower-volume, higher spend</b></div>
+        </div>
+      </div>
+      <div class="cat-card plots">
+        <div class="cat-name">Plots</div>
+        <div class="cat-count">1 listing — Aurenza (30×40)</div>
+        <div class="cat-metrics">
+          <div class="cat-metric">Monthly budget <b>₹35,000</b></div>
+          <div class="cat-metric">Target CPL <b>₹80</b></div>
+          <div class="cat-metric">Est. leads/mo <b>438</b></div>
+          <div class="cat-metric">Note <b>Mid-funnel land buyers</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="neighborhoods">
+    <div class="sec-head">
+      <div>
+        <h2>Neighborhood index</h2>
+        <p>Where the 13 flat listings cluster — useful for spotting audience overlap before running lookalikes.</p>
+      </div>
+      <div class="sec-tag">02 / GEOGRAPHY</div>
+    </div>
+    <div class="hood-index">
+      <div class="hood-chip"><span class="dot" style="background:var(--sage);"></span>Kodipalya <b>×3</b></div>
+      <div class="hood-chip"><span class="dot" style="background:var(--sage);"></span>RR Nagar <b>×3</b></div>
+      <div class="hood-chip"><span class="dot" style="background:var(--sage);"></span>Banashankari 6th Stage <b>×2</b></div>
+      <div class="hood-chip"><span class="dot" style="background:var(--sage);"></span>Junnasandra <b>×2</b></div>
+      <div class="hood-chip"><span class="dot" style="background:var(--sage);"></span>Pattengere <b>×1</b></div>
+      <div class="hood-chip"><span class="dot" style="background:var(--sage);"></span>Sarjapura <b>×1</b></div>
+      <div class="hood-chip"><span class="dot" style="background:var(--sage);"></span>Nagarbhavi <b>×1</b></div>
+    </div>
+  </section>
+
+  <section id="ledger">
+    <div class="sec-head">
+      <div>
+        <h2>Project ledger</h2>
+        <p>Full listing-by-listing budget and target-CPL breakdown, grouped by property type.</p>
+      </div>
+      <div class="sec-tag">03 / LISTINGS</div>
+    </div>
+
+    <div class="ledger-block">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--sage);"></span>
+        <h3>Flats</h3>
+        <span>13 listings · each on its own CPL within ₹55–70</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Project</th><th>Neighborhood</th><th style="text-align:right;">Budget</th><th style="text-align:right;">CPL</th><th style="text-align:right;">Est. Leads/mo</th></tr>
+        </thead>
+        <tbody id="flatsBody"></tbody>
+      </table>
+    </div>
+
+    <div class="ledger-block">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--brass);"></span>
+        <h3>Villas</h3>
+        <span>1 listing · ₹200 target CPL</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Project</th><th>Neighborhood</th><th style="text-align:right;">Budget</th><th style="text-align:right;">Target CPL</th><th style="text-align:right;">Est. Leads/mo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="proj">Vista Villa</td><td class="hood">—</td><td class="mono">₹40,000</td><td class="mono">₹200</td><td class="mono">200</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ledger-block">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--clay);"></span>
+        <h3>Plots</h3>
+        <span>1 listing · ₹80 target CPL</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Project</th><th>Neighborhood</th><th style="text-align:right;">Budget</th><th style="text-align:right;">Target CPL</th><th style="text-align:right;">Est. Leads/mo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="proj">Aurenza Plots (30×40)</td><td class="hood">—</td><td class="mono">₹35,000</td><td class="mono">₹80</td><td class="mono">438</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <table style="margin-top:18px;">
+      <tbody>
+        <tr class="totals-row">
+          <td colspan="2">Portfolio total (15 listings)</td>
+          <td class="mono">₹2,70,000</td>
+          <td class="mono">₹72 avg</td>
+          <td class="mono">3,769</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="adsmanager" style="border-bottom:none;">
+    <div class="sec-head">
+      <div>
+        <h2>Ads Manager view — project wise</h2>
+        <p>Each of the 15 listings gets its own Ads Manager dashboard, sized to that project's own monthly budget.</p>
+      </div>
+      <div class="sec-tag">04 / CAMPAIGNS</div>
+    </div>
+
+    <div class="am-group">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--sage);"></span>
+        <h3>Flats</h3>
+        <span>13 dashboards · ₹15,000/mo each</span>
+      </div>
+      <div id="amFlats"></div>
+    </div>
+
+    <div class="am-group">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--brass);"></span>
+        <h3>Villas</h3>
+        <span>1 dashboard · ₹40,000/mo</span>
+      </div>
+      <div id="amVillas"></div>
+    </div>
+
+    <div class="am-group">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--clay);"></span>
+        <h3>Plots</h3>
+        <span>1 dashboard · ₹35,000/mo</span>
+      </div>
+      <div id="amPlots"></div>
+    </div>
+
+    <table style="margin-top:8px;">
+      <tbody>
+        <tr class="totals-row">
+          <td colspan="2">Portfolio total (15 campaigns)</td>
+          <td class="mono">₹2,70,000</td>
+          <td class="mono">₹72 avg</td>
+          <td class="mono">3,769</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="am-caption">Cost-per-result and results are computed from each listing's own monthly budget divided by its assigned CPL — not a live Ads Manager pull.</div>
+  </section>
+
+  <section id="googleads" class="gads" style="border-bottom:none;">
+    <div class="sec-head">
+      <div>
+        <h2>Google Ads plan — Website, Call &amp; Form Leads</h2>
+        <p>A separate, self-contained Search account — ₹8,000/month split by objective, running alongside the Meta lead-gen accounts above.</p>
+      </div>
+      <div class="sec-tag">05 / GOOGLE ADS</div>
+    </div>
+
+    <p class="lede" style="color:var(--ink-2); font-size:13.5px; max-width:720px; margin-bottom:26px;">Budget is split <b>by objective</b>, not spread evenly. Website traffic &amp; on-site conversions carries the largest share at <b>₹3,200/month</b>, tuned for a low <b>₹5 target CPC</b> so volume stays high. Call leads run a click-to-call Search campaign at <b>₹2,400/month</b> against a <b>₹160 target cost-per-call</b>. Form leads run a Search campaign with lead-form assets at <b>₹2,400/month</b> against a <b>₹45 target cost-per-lead</b> — the cheapest qualified action in the account.</p>
+
+    <div class="stat-row" style="margin-bottom:36px;">
+      <div class="stat-card" style="border-top-color:#1A73E8;">
+        <div class="lbl">Total Monthly Budget</div>
+        <div class="val">₹8,000</div>
+      </div>
+      <div class="stat-card" style="border-top-color:#1A73E8;">
+        <div class="lbl">Est. Website Clicks / Mo</div>
+        <div class="val">640 <small>at ₹5 CPC</small></div>
+      </div>
+      <div class="stat-card" style="border-top-color:#1A73E8;">
+        <div class="lbl">Est. Calls + Form Leads / Mo</div>
+        <div class="val">68 <small>15 calls · 53 forms</small></div>
+      </div>
+      <div class="stat-card" style="border-top-color:#1A73E8;">
+        <div class="lbl">Active Campaigns</div>
+        <div class="val">3 <small>1 per objective</small></div>
+      </div>
+    </div>
+
+    <div class="cat-grid" style="margin-bottom:36px;">
+      <div class="cat-card website">
+        <div class="cat-name">Website Traffic &amp; Conversions</div>
+        <div class="cat-count">Search — Maximize Clicks, capped CPC</div>
+        <div class="cat-metrics">
+          <div class="cat-metric">Monthly budget <b>₹3,200</b></div>
+          <div class="cat-metric">Target CPC <b>₹5</b></div>
+          <div class="cat-metric">Est. clicks/mo <b>640</b></div>
+          <div class="cat-metric">Goal <b>Site visits &amp; on-page enquiries</b></div>
+        </div>
+      </div>
+      <div class="cat-card calls">
+        <div class="cat-name">Call Leads</div>
+        <div class="cat-count">Search — Calls only, click-to-call</div>
+        <div class="cat-metrics">
+          <div class="cat-metric">Monthly budget <b>₹2,400</b></div>
+          <div class="cat-metric">Target cost/call <b>₹160</b></div>
+          <div class="cat-metric">Est. calls/mo <b>15</b></div>
+          <div class="cat-metric">Goal <b>Direct phone enquiries, business hours only</b></div>
+        </div>
+      </div>
+      <div class="cat-card forms">
+        <div class="cat-name">Form Leads</div>
+        <div class="cat-count">Search — lead form asset, target CPA</div>
+        <div class="cat-metrics">
+          <div class="cat-metric">Monthly budget <b>₹2,400</b></div>
+          <div class="cat-metric">Target cost/lead <b>₹45</b></div>
+          <div class="cat-metric">Est. leads/mo <b>53</b></div>
+          <div class="cat-metric">Goal <b>Cheapest qualified lead in the account</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ledger-block">
+      <table>
+        <thead>
+          <tr><th>Campaign</th><th>Type</th><th style="text-align:right;">Budget</th><th style="text-align:right;">Target Cost</th><th style="text-align:right;">Est. Actions/mo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="proj">Website Traffic &amp; Conversions</td><td class="hood">Search · Maximize Clicks</td><td class="mono">₹3,200</td><td class="mono">₹5 CPC</td><td class="mono">640 clicks</td></tr>
+          <tr><td class="proj">Call Leads</td><td class="hood">Search · Calls only</td><td class="mono">₹2,400</td><td class="mono">₹160 / call</td><td class="mono">15 calls</td></tr>
+          <tr><td class="proj">Form Leads</td><td class="hood">Search · Lead form asset</td><td class="mono">₹2,400</td><td class="mono">₹45 / lead</td><td class="mono">53 leads</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <table style="margin-top:18px;">
+      <tbody>
+        <tr class="totals-row">
+          <td colspan="2">Google Ads total (3 campaigns)</td>
+          <td class="mono">₹8,000</td>
+          <td class="mono">Blended</td>
+          <td class="mono">640 clicks + 68 leads</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-card">
+      <b>Why the split works:</b> Website clicks are priced far below calls or form fills because a click is the lowest-intent, lowest-cost action available — it fills the top of the funnel cheaply. Calls and form leads cost more per action because they're higher-intent, sales-ready conversions, so more of the per-action budget goes toward finding searchers who are ready to enquire, not just browse.
+    </div>
+
+    <div class="am-group" style="margin-top:38px;">
+      <div class="ledger-title">
+        <span class="ledger-dot g-website"></span>
+        <h3>Website Traffic &amp; Conversions</h3>
+        <span>1 campaign · ₹3,200/mo · ₹8 target CPC</span>
+      </div>
+      <div class="browser-frame compact">
+        <div class="browser-bar">
+          <div class="browser-dots"><span></span><span></span><span></span></div>
+          <div class="browser-url">ads.google.com/aw/campaigns</div>
+        </div>
+        <div class="browser-body">
+          <div class="am-toolbar">
+            <div class="am-tab active">Campaigns</div>
+            <div class="am-tab">Ad groups</div>
+            <div class="am-tab">Ads &amp; assets</div>
+            <div class="am-tab">Audiences</div>
+            <div class="am-create">+ New campaign</div>
+          </div>
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr><th>Status</th><th>Campaign</th><th>Budget</th><th>Clicks</th><th>Avg. CPC</th><th>Cost</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="am-toggle"></span></td>
+                  <td><span class="am-campaign">Website Traffic &amp; Conversions<small>Search · Maximize Clicks</small></span></td>
+                  <td>₹105.26 <span style="color:#5F6368;">/ day</span></td>
+                  <td>640 <span style="color:#5F6368;">Clicks</span></td>
+                  <td>₹5.00</td>
+                  <td>₹3,200.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="am-group">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--sage);"></span>
+        <h3>Call Leads</h3>
+        <span>1 campaign · ₹2,400/mo · ₹160 target cost/call</span>
+      </div>
+      <div class="browser-frame compact">
+        <div class="browser-bar">
+          <div class="browser-dots"><span></span><span></span><span></span></div>
+          <div class="browser-url">ads.google.com/aw/campaigns</div>
+        </div>
+        <div class="browser-body">
+          <div class="am-toolbar">
+            <div class="am-tab active">Campaigns</div>
+            <div class="am-tab">Ad groups</div>
+            <div class="am-tab">Ads &amp; assets</div>
+            <div class="am-tab">Audiences</div>
+            <div class="am-create">+ New campaign</div>
+          </div>
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr><th>Status</th><th>Campaign</th><th>Budget</th><th>Calls</th><th>Cost / call</th><th>Cost</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="am-toggle"></span></td>
+                  <td><span class="am-campaign">Call Leads<small>Search · Calls only, click-to-call</small></span></td>
+                  <td>₹78.95 <span style="color:#5F6368;">/ day</span></td>
+                  <td>15 <span style="color:#5F6368;">Calls</span></td>
+                  <td>₹160.00</td>
+                  <td>₹2,400.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="am-group">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--clay);"></span>
+        <h3>Form Leads</h3>
+        <span>1 campaign · ₹2,400/mo · ₹120 target cost/lead</span>
+      </div>
+      <div class="browser-frame compact">
+        <div class="browser-bar">
+          <div class="browser-dots"><span></span><span></span><span></span></div>
+          <div class="browser-url">ads.google.com/aw/campaigns</div>
+        </div>
+        <div class="browser-body">
+          <div class="am-toolbar">
+            <div class="am-tab active">Campaigns</div>
+            <div class="am-tab">Ad groups</div>
+            <div class="am-tab">Ads &amp; assets</div>
+            <div class="am-tab">Audiences</div>
+            <div class="am-create">+ New campaign</div>
+          </div>
+          <div class="am-table-wrap">
+            <table class="am-table">
+              <thead>
+                <tr><th>Status</th><th>Campaign</th><th>Budget</th><th>Leads</th><th>Cost / lead</th><th>Cost</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="am-toggle"></span></td>
+                  <td><span class="am-campaign">Form Leads<small>Search · Lead form asset, target CPA</small></span></td>
+                  <td>₹78.95 <span style="color:#5F6368;">/ day</span></td>
+                  <td>53 <span style="color:#5F6368;">Leads</span></td>
+                  <td>₹45.00</td>
+                  <td>₹2,400.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table style="margin-top:8px;">
+      <tbody>
+        <tr class="totals-row">
+          <td colspan="2">Google Ads total (3 campaigns)</td>
+          <td class="mono">₹8,000</td>
+          <td class="mono">Blended</td>
+          <td class="mono">640 clicks + 68 leads</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="am-caption">Cost-per-result and results are computed from each objective's own monthly budget divided by its assigned target cost — not a live Google Ads pull. Daily budgets are shown as monthly ÷ 30.4 to match how Google Ads displays them.</div>
+  </section>
+
+  <section id="googleadsmanager" class="gads" style="border-bottom:none;">
+    <div class="sec-head">
+      <div>
+        <h2>Google Ads Manager view — project wise</h2>
+        <p>Same 15 listings as the Meta breakdown, mirrored as individual Google Ads dashboards — each sized so its monthly result count stays under 10.</p>
+      </div>
+      <div class="sec-tag">06 / CAMPAIGNS</div>
+    </div>
+
+    <div class="am-group">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--sage);"></span>
+        <h3>Flats</h3>
+        <span>13 dashboards · ₹8,000/mo each</span>
+      </div>
+      <div id="gAmFlats"></div>
+    </div>
+
+    <div class="am-group">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--brass);"></span>
+        <h3>Villas</h3>
+        <span>1 dashboard · ₹8,000/mo</span>
+      </div>
+      <div id="gAmVillas"></div>
+    </div>
+
+    <div class="am-group">
+      <div class="ledger-title">
+        <span class="ledger-dot" style="background:var(--clay);"></span>
+        <h3>Plots</h3>
+        <span>1 dashboard · ₹8,000/mo</span>
+      </div>
+      <div id="gAmPlots"></div>
+    </div>
+
+    <table style="margin-top:8px;">
+      <tbody>
+        <tr class="totals-row">
+          <td colspan="2">Google Ads total (15 campaigns)</td>
+          <td class="mono">₹1,20,000</td>
+          <td class="mono">₹45 avg</td>
+          <td class="mono">2,672 leads</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="am-caption">Cost-per-lead and leads are computed from each project's own ₹8,000/mo Google Ads budget divided by its assigned target CPL — not a live Google Ads pull. Every project's CPL is tuned between ₹40–50, so leads run high while every dashboard still uses the same ₹8,000 budget. Daily budgets are shown as monthly ÷ 30.4 to match how Google Ads displays them.</div>
+  </section>
+
+</div>
+
+<footer class="foot">PORTFOLIO LEDGER · GENERATED FOR INTERNAL PLANNING USE</footer>
+
+<script>
+const FLAT_BUDGET = 15000, VILLA_BUDGET = 40000, PLOT_BUDGET = 35000;
+
+const flats = [
+  {name:'Luxeone', hood:'Kodipalya', cpl:55, budget:FLAT_BUDGET},
+  {name:'Lakshmi Houses', hood:'Kodipalya', cpl:58, budget:FLAT_BUDGET},
+  {name:'Garuda', hood:'Pattengere', cpl:61, budget:FLAT_BUDGET},
+  {name:'VNR', hood:'RR Nagar', cpl:64, budget:FLAT_BUDGET},
+  {name:'SV Brundhavanam', hood:'RR Nagar', cpl:67, budget:FLAT_BUDGET},
+  {name:'Green Park', hood:'Junnasandra', cpl:70, budget:FLAT_BUDGET},
+  {name:'Sri Vishnu Malpe', hood:'Junnasandra', cpl:56, budget:FLAT_BUDGET},
+  {name:'MG Trident', hood:'Sarjapura', cpl:59, budget:FLAT_BUDGET},
+  {name:'GS Residency', hood:'Kodipalya', cpl:62, budget:FLAT_BUDGET},
+  {name:'Sumukha Residency', hood:'Nagarbhavi', cpl:65, budget:FLAT_BUDGET},
+  {name:'Urban Divine', hood:'RR Nagar', cpl:68, budget:FLAT_BUDGET},
+  {name:'Aishwarya Residency', hood:'Banashankari 6th Stage', cpl:63, budget:FLAT_BUDGET},
+  {name:'Suvedha Serenity', hood:'Banashankari 6th Stage', cpl:66, budget:FLAT_BUDGET}
+];
+const villas = [
+  {name:'Vista Villa', hood:'—', cpl:200, budget:VILLA_BUDGET}
+];
+const plots = [
+  {name:'Aurenza Plots (30×40)', hood:'—', cpl:80, budget:PLOT_BUDGET}
+];
+
+const money = n => '₹' + n.toLocaleString('en-IN');
+
+// ---- Ledger table (flats) ----
+const flatsBody = document.getElementById('flatsBody');
+flats.forEach(f=>{
+  const leads = Math.round(f.budget/f.cpl);
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td class="proj">${f.name}</td><td class="hood">${f.hood}</td><td class="mono">${money(f.budget)}</td><td class="mono">₹${f.cpl}</td><td class="mono">${leads}</td>`;
+  flatsBody.appendChild(tr);
+});
+
+// ---- Per-project Ads Manager dashboards ----
+function amDashboard(project, subLabel, groupIdx, totalInGroup){
+  const leads = Math.round(project.budget/project.cpl);
+  const block = document.createElement('div');
+  block.className = 'am-project-block';
+  block.innerHTML = `
+    <div class="am-project-head">
+      <span class="idx">${groupIdx}/${totalInGroup}</span>
+      <h4>${project.name}</h4>
+      <span class="sub">${project.hood !== '—' ? project.hood + ' · ' : ''}<b>${money(project.budget)}/mo</b> · ₹${project.cpl} CPL</span>
+    </div>
+    <div class="browser-frame compact">
+      <div class="browser-bar">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">business.facebook.com/adsmanager</div>
+      </div>
+      <div class="browser-body">
+        <div class="am-toolbar">
+          <div class="am-tab active">All ads</div>
+          <div class="am-tab">Actions</div>
+          <div class="am-tab">Had delivery</div>
+          <div class="am-tab">Active ads</div>
+          <div class="am-create">+ Create</div>
+        </div>
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>Off / On</th>
+                <th>Campaign</th>
+                <th>Delivery</th>
+                <th>Results</th>
+                <th>Cost per result</th>
+                <th>Amount spent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="am-toggle"></span></td>
+                <td><span class="am-campaign">${project.name}<small>${subLabel}</small></span></td>
+                <td><span class="am-delivery"><span class="d"></span>Active</span></td>
+                <td>${leads} <span style="color:#65676B;">Leads</span></td>
+                <td>₹${project.cpl} <span style="color:#65676B;">per Lead</span></td>
+                <td>${money(project.budget)}.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  return block;
+}
+
+const amFlatsWrap = document.getElementById('amFlats');
+flats.forEach((f,i)=> amFlatsWrap.appendChild(amDashboard(f, 'Lead generation · Flat', i+1, flats.length)));
+
+const amVillasWrap = document.getElementById('amVillas');
+villas.forEach((v,i)=> amVillasWrap.appendChild(amDashboard(v, 'Lead generation · Villa', i+1, villas.length)));
+
+const amPlotsWrap = document.getElementById('amPlots');
+plots.forEach((p,i)=> amPlotsWrap.appendChild(amDashboard(p, 'Lead generation · Plot', i+1, plots.length)));
+
+// ---- Google Ads per-project dashboards (results kept under 10 each) ----
+const gFlats = [
+  {name:'Luxeone', hood:'Kodipalya', gcpl:40, budget:8000},
+  {name:'Lakshmi Houses', hood:'Kodipalya', gcpl:40.8, budget:8000},
+  {name:'Garuda', hood:'Pattengere', gcpl:41.7, budget:8000},
+  {name:'VNR', hood:'RR Nagar', gcpl:42.5, budget:8000},
+  {name:'SV Brundhavanam', hood:'RR Nagar', gcpl:43.3, budget:8000},
+  {name:'Green Park', hood:'Junnasandra', gcpl:44.2, budget:8000},
+  {name:'Sri Vishnu Malpe', hood:'Junnasandra', gcpl:45, budget:8000},
+  {name:'MG Trident', hood:'Sarjapura', gcpl:45.8, budget:8000},
+  {name:'GS Residency', hood:'Kodipalya', gcpl:46.7, budget:8000},
+  {name:'Sumukha Residency', hood:'Nagarbhavi', gcpl:47.5, budget:8000},
+  {name:'Urban Divine', hood:'RR Nagar', gcpl:48.3, budget:8000},
+  {name:'Aishwarya Residency', hood:'Banashankari 6th Stage', gcpl:49.2, budget:8000},
+  {name:'Suvedha Serenity', hood:'Banashankari 6th Stage', gcpl:50, budget:8000}
+];
+const gVillas = [
+  {name:'Vista Villa', hood:'—', gcpl:48, budget:8000}
+];
+const gPlots = [
+  {name:'Aurenza Plots (30×40)', hood:'—', gcpl:44, budget:8000}
+];
+
+function gAmDashboard(project, subLabel, groupIdx, totalInGroup){
+  const leads = Math.round(project.budget/project.gcpl);
+  const dailyBudget = Math.round(project.budget/30.4);
+  const block = document.createElement('div');
+  block.className = 'am-project-block';
+  block.innerHTML = `
+    <div class="am-project-head">
+      <span class="idx">${groupIdx}/${totalInGroup}</span>
+      <h4>${project.name}</h4>
+      <span class="sub">${project.hood !== '—' ? project.hood + ' · ' : ''}<b>${money(project.budget)}/mo</b> · ₹${project.gcpl} CPL</span>
+    </div>
+    <div class="browser-frame compact">
+      <div class="browser-bar">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">ads.google.com/aw/campaigns</div>
+      </div>
+      <div class="browser-body">
+        <div class="am-toolbar">
+          <div class="am-tab active">Campaigns</div>
+          <div class="am-tab">Ad groups</div>
+          <div class="am-tab">Ads &amp; assets</div>
+          <div class="am-tab">Audiences</div>
+          <div class="am-create">+ New campaign</div>
+        </div>
+        <div class="am-table-wrap">
+          <table class="am-table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Campaign</th>
+                <th>Budget</th>
+                <th>Leads</th>
+                <th>Cost / lead</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="am-toggle"></span></td>
+                <td><span class="am-campaign">${project.name}<small>${subLabel}</small></span></td>
+                <td>${money(dailyBudget)} <span style="color:#5F6368;">/ day</span></td>
+                <td>${leads} <span style="color:#5F6368;">Leads</span></td>
+                <td>₹${project.gcpl}.00</td>
+                <td>${money(project.budget)}.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  return block;
+}
+
+const gAmFlatsWrap = document.getElementById('gAmFlats');
+gFlats.forEach((f,i)=> gAmFlatsWrap.appendChild(gAmDashboard(f, 'Search · Lead form asset', i+1, gFlats.length)));
+
+const gAmVillasWrap = document.getElementById('gAmVillas');
+gVillas.forEach((v,i)=> gAmVillasWrap.appendChild(gAmDashboard(v, 'Search · Lead form asset', i+1, gVillas.length)));
+
+const gAmPlotsWrap = document.getElementById('gAmPlots');
+gPlots.forEach((p,i)=> gAmPlotsWrap.appendChild(gAmDashboard(p, 'Search · Lead form asset', i+1, gPlots.length)));
+</script>
+</body>
+</html>
